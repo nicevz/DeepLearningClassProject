@@ -57,7 +57,7 @@ https://drive.google.com/file/d/1YDwE2MPYkLaff1LLy1k0zwuilUbF-6j7/view?usp=shari
 
 version not strict as long as it runs...
 
-`torch		1.12.1
+torch		1.12.1
 
 torchvision	0.13.1
 
@@ -77,5 +77,5 @@ SimpleITK
 
 scipy		1.9.3
 
-h5py		3.7.0`
+h5py		3.7.0
 
