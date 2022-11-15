@@ -58,13 +58,24 @@ https://drive.google.com/file/d/1YDwE2MPYkLaff1LLy1k0zwuilUbF-6j7/view?usp=shari
 version not strict as long as it runs...
 
 `torch		1.12.1
+
 torchvision	0.13.1
+
 numpy		1.23.3
+
 tqdm
+
 tensorboard	2.11.0
+
 tensorboardX	2.5.1
+
 ml-collections
+
 medpy		0.4.0
+
 SimpleITK
+
 scipy		1.9.3
+
 h5py		3.7.0`
+
