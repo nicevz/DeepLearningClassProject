@@ -9,20 +9,18 @@ import Trainer
 from Config import get_config
 
 parser = argparse.ArgumentParser()
-parser.add_argument(
-    '--dataset_path',
-    type=str,
-    default='/home/vincent/Downloads/st/Task01_BrainTumour/sliced_dataset/fv3/',
-    help='root dir for data')
+parser.add_argument('--dataset_path',
+                    type=str,
+                    default='/data/zhanwei/ppp/dataset',
+                    help='root dir for data')
 parser.add_argument('--data_list_path',
                     type=str,
-                    default='./lists',
+                    default='/data/zhanwei/ppp/dataset/lists',
                     help='list dir')
-parser.add_argument(
-    '--output_path',
-    type=str,
-    default='/home/vincent/Downloads/st/Task01_BrainTumour/out_test',
-    help='output dir')
+parser.add_argument('--output_path',
+                    type=str,
+                    default='/data/zhanwei/ppp/out_test',
+                    help='output dir')
 parser.add_argument('--num_classes',
                     type=int,
                     default=4,
@@ -33,7 +31,7 @@ parser.add_argument('--epochs',
                     help='maximum epoch number to train')
 parser.add_argument('--batch_size',
                     type=int,
-                    default=1,
+                    default=8,
                     help='batch_size per gpu')
 parser.add_argument('--base_lr',
                     type=float,
@@ -45,7 +43,7 @@ args = parser.parse_args()
 config = get_config()
 
 if __name__ == "__main__":
-
+    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
     cudnn.benchmark = True
     cudnn.deterministic = False
 
@@ -59,7 +57,7 @@ if __name__ == "__main__":
 
     torch.cuda.empty_cache()
     net = model.SwinU.SwinUnet(config, num_classes=args.num_classes).cuda()
-    pretrained_path = f"{os.path.dirname(__file__)}/pretrained_swin_model/swinv2_tiny_patch4_window16_256.pth"
-    # net.load_from(pretrained_path)
+    pretrained_path = "/home/zhanwei/datafolder/ppp/swinv2_tiny_patch4_window16_256.pth"
+    net.load_from(pretrained_path)
 
     Trainer.train(args, net, args.output_path)
