@@ -37,7 +37,7 @@ def train(args, model, out_path):
         list_dir=args.data_list_path,
         split="train",
         transform=transforms.Compose(
-            [data.Dataset.RandomGenerator(output_size=[240, 240])]))
+            [data.Dataset.RandomGenerator(output_size=[256, 256])]))
 
     logging.info("The length of train set is: {}".format(len(dataset_train)))
 
@@ -47,7 +47,9 @@ def train(args, model, out_path):
     train_loader = DataLoader(dataset_train,
                               batch_size=batch_size,
                               shuffle=True,
-                              pin_memory=False)
+                              num_workers=8,
+                              pin_memory=True,
+                              worker_init_fn=worker_init_fn)
     max_iterations = max_epoch * len(train_loader)
     ce_loss = CrossEntropyLoss()
     dice_loss = DiceLoss(num_classes)
