@@ -12,7 +12,7 @@ _C.BASE = ['']
 # Data settings
 # -----------------------------------------------------------------------------
 _C.DATA = CN()
-_C.DATA.IMG_SIZE = 256
+_C.DATA.NC = 4
 
 # -----------------------------------------------------------------------------
 # Model settings
@@ -22,8 +22,9 @@ _C.MODEL.DROP_RATE = 0.0
 _C.MODEL.DROP_PATH_RATE = 0.2
 
 _C.MODEL.SWIN = CN()
+_C.MODEL.SWIN.IMG_SIZE = 256
 _C.MODEL.SWIN.PATCH_SIZE = 4
-_C.MODEL.SWIN.IN_CHANS = 3
+_C.MODEL.SWIN.IN_CHANS = 1
 _C.MODEL.SWIN.EMBED_DIM = 96
 _C.MODEL.SWIN.DEPTHS = [2, 2, 2, 2]
 _C.MODEL.SWIN.NUM_HEADS = [3, 6, 12, 24]

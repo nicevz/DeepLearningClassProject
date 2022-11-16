@@ -1,10 +1,9 @@
 import os
 import random
+
 import h5py
 import numpy as np
 import torch
-from scipy import ndimage
-
 from torch.utils.data import Dataset
 
 
@@ -18,25 +17,16 @@ def random_rot_flip(image, label):
     return image, label
 
 
-def random_rotate(image, label):
-    angle = np.random.randint(-20, 20)
-    image = ndimage.rotate(image, angle, order=0, reshape=False)
-    label = ndimage.rotate(label, angle, order=0, reshape=False)
-    return image, label
-
-
 class RandomGenerator(object):
 
     def __init__(self, adj):
-        self.adj=adj
+        self.adj = adj
 
     def __call__(self, sample):
         image, label = sample['image'], sample['label']
 
         if random.random() > 0.5:
             image, label = random_rot_flip(image, label)
-        elif random.random() > 0.5:
-            image, label = random_rotate(image, label)
 
         image = torch.from_numpy(image.astype(np.float32)).unsqueeze(0)
         label = torch.from_numpy(label.astype(np.int8))
@@ -51,11 +41,12 @@ class RandomGenerator(object):
 
 class MSD_Dataset(Dataset):
 
-    def __init__(self, base_dir, list_dir, split, transform=None):
+    def __init__(self, base_dir, split, transform=None):
         self.transform = transform
         self.split = split
-        self.sample_list = open(os.path.join(list_dir,
-                                             self.split + '.txt')).readlines()
+        self.sample_list = open(
+            os.path.join(base_dir,
+                         'lists/' + self.split + '.txt')).readlines()
         self.data_dir = base_dir
 
     def __len__(self):
@@ -69,12 +60,12 @@ class MSD_Dataset(Dataset):
             image, label = data['image'], data['label']
         else:
             vol_name = self.sample_list[idx].strip('\n')
-            filepath = self.data_dir + "/{}.npy.h5".format(vol_name)
+            filepath = self.data_dir + f"/{vol_name}.npy.h5"
             data = h5py.File(filepath)
             image, label = data['image'][:], data['label'][:]
 
         sample = {'image': image, 'label': label}
         if self.transform:
             sample = self.transform(sample)
-        sample['case_name'] = self.sample_list[idx].strip('\n')
+
         return sample

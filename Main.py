@@ -15,20 +15,10 @@ parser.add_argument(
     default='/home/vincent/Downloads/st/Task01_BrainTumour/sliced_dataset/tv3',
     help='root dir for data')
 parser.add_argument(
-    '--data_list_path',
-    type=str,
-    default=
-    '/home/vincent/Downloads/st/Task01_BrainTumour/sliced_dataset/tv3/lists',
-    help='list dir')
-parser.add_argument(
     '--output_path',
     type=str,
     default='/home/vincent/Downloads/st/Task01_BrainTumour/sliced_dataset/ooo',
     help='output dir')
-parser.add_argument('--num_classes',
-                    type=int,
-                    default=4,
-                    help='output channel of network')
 parser.add_argument('--epochs',
                     type=int,
                     default=200,
@@ -63,8 +53,8 @@ if __name__ == "__main__":
     if not os.path.exists(args.output_path):
         os.makedirs(args.output_path)
 
-    net = model.SwinU.SwinUnet(config, num_classes=args.num_classes).cuda()
+    net = model.SwinU.SwinUnet(config).cuda()
     pretrained_path = "/home/vincent/Documents/swinunetv2/pretrained_swin_model/swinv2_tiny_patch4_window16_256.pth"
     net.load_from(pretrained_path)
 
-    Trainer.train(args, net, args.output_path)
+    Trainer.train(config, args, net, args.output_path)

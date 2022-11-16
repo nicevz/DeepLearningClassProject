@@ -17,7 +17,7 @@ from torchvision import transforms
 import data.Dataset
 
 
-def train(args, model, out_path):
+def train(config, args, model, out_path):
 
     logging.basicConfig(filename=out_path + "/log.txt",
                         level=logging.INFO,
@@ -27,14 +27,13 @@ def train(args, model, out_path):
     logging.info(str(args))
 
     base_lr = args.base_lr
-    num_classes = args.num_classes
+
     batch_size = args.batch_size
     max_epoch = args.epochs
     model.train()
 
     dataset_train = data.Dataset.MSD_Dataset(
         base_dir=args.dataset_path,
-        list_dir=args.data_list_path,
         split="train",
         transform=transforms.Compose([data.Dataset.RandomGenerator(True)]))
 
@@ -51,7 +50,7 @@ def train(args, model, out_path):
                               worker_init_fn=worker_init_fn)
     max_iterations = max_epoch * len(train_loader)
     ce_loss = CrossEntropyLoss()
-    dice_loss = DiceLoss(num_classes)
+    dice_loss = DiceLoss(config.DATA.NC)
     optimizer = optim.SGD(model.parameters(),
                           lr=base_lr,
                           momentum=0.9,

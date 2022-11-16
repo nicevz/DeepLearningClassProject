@@ -1,4 +1,5 @@
 # DeepLearningClassProject
+
 # A U-Net Model with SwinV2 Backbone
 
 ## How to:
@@ -13,11 +14,11 @@ run Val.py to validate the model (not implement/modified yet, so not working)
 
 root dir to dataset, e.g. '/data/zhanwei/ppp/dataset'
 
-### --data_list_path
+### ~~--data_list_path~~
 
-file list for dataset, e.g. '/data/zhanwei/ppp/dataset/lists'
+~~file list for dataset, e.g. '/data/zhanwei/ppp/dataset/lists'~~
 
-(should be deprecated later)
+deprecated
 
 ### --output_path
 
@@ -25,11 +26,13 @@ where the tensorboard log and saved checkpoints are saved
 
 e.g. '/data/zhanwei/ppp/out_test'
 
-### --num_classes
+### ~~--num_classes~~*
 
 for this dataset, 4
 
 "Background", "Edema", "Non-enhancing Tumor" and "Enhancing Tumor"
+
+*Edit this in config.py where `_C.DATA.NC=4`
 
 ### --epochs
 
@@ -78,4 +81,3 @@ SimpleITK
 scipy		1.9.3
 
 h5py		3.7.0
-
