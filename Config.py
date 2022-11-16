@@ -1,5 +1,3 @@
-import os
-import yaml
 from yacs.config import CfgNode as CN
 '''swinv2_tiny_patch4_window16_256'''
 
