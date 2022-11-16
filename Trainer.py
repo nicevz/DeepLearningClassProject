@@ -32,12 +32,11 @@ def train(args, model, out_path):
     max_epoch = args.epochs
     model.train()
 
-    dataset_train = data.Dataset.Synapse_dataset(
+    dataset_train = data.Dataset.MSD_Dataset(
         base_dir=args.dataset_path,
         list_dir=args.data_list_path,
         split="train",
-        transform=transforms.Compose(
-            [data.Dataset.RandomGenerator(output_size=[256, 256])]))
+        transform=transforms.Compose([data.Dataset.RandomGenerator(True)]))
 
     logging.info("The length of train set is: {}".format(len(dataset_train)))
 
@@ -47,7 +46,7 @@ def train(args, model, out_path):
     train_loader = DataLoader(dataset_train,
                               batch_size=batch_size,
                               shuffle=True,
-                              num_workers=8,
+                              num_workers=2,
                               pin_memory=True,
                               worker_init_fn=worker_init_fn)
     max_iterations = max_epoch * len(train_loader)

@@ -62,8 +62,6 @@ class SwinUnet(nn.Module):
         pretrained_path = path
         if pretrained_path is not None:
             print("pretrained_path:{}".format(pretrained_path))
-            device = torch.device(
-                'cuda' if torch.cuda.is_available() else 'cpu')
             pretrained_dict = torch.load(pretrained_path, map_location='cpu')
             if "model" not in pretrained_dict:
                 print("---start load pretrained modle by splitting---")

@@ -520,6 +520,7 @@ class FinalPatchExpand_X4(nn.Module):
         assert L == H * W, "input feature has wrong size"
 
         x = x.view(B, H, W, C)
+
         x = rearrange(x,
                       'b h w (p1 p2 c)-> b (h p1) (w p2) c',
                       p1=self.dim_scale,
