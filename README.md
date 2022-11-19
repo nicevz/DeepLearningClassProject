@@ -6,7 +6,7 @@
 
 run Main.py to train the model
 
-run Val.py to validate the model (not implement/modified yet, so not working)
+run Val.py to validate the model
 
 ## Parameters to train:
 
@@ -81,3 +81,9 @@ SimpleITK
 scipy		1.9.3
 
 h5py		3.7.0
+
+## Reference:
+
+[HuCaoFighting/Swin-Unet: The codes for the work &#34;Swin-Unet: Unet-like Pure Transformer for Medical Image Segmentation&#34; (github.com)](https://github.com/HuCaoFighting/Swin-Unet)
+
+[microsoft/Swin-Transformer: This is an official implementation for &#34;Swin Transformer: Hierarchical Vision Transformer using Shifted Windows&#34;. (github.com)](https://github.com/microsoft/Swin-Transformer)
