@@ -36,11 +36,7 @@ for this dataset, 4
 
 ### --epochs
 
-i'm using 200
-
 ### --batch_size
-
-for a 11GB card like 2080Ti, no higher than 8
 
 ### --base_lr
 
