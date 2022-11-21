@@ -65,20 +65,21 @@ def test_single_volume(image,
                        label,
                        net,
                        classes,
-                       patch_size=[256, 256],
                        test_save_path=None,
                        case=None,
                        z_spacing=1):
-    image, label = image.squeeze(0).cpu().detach().numpy(), label.squeeze(
-        0).cpu().detach().numpy()
+    trans = nn.ConstantPad3d((0, 0, 8, 8, 8, 8), 0)
+    image = image.squeeze(0)
+    image = trans(image)
+    image = image.cpu().detach().numpy()
+
+    label = label.squeeze(0)
+    label = trans(label)
+    label = label.cpu().detach().numpy()
     if len(image.shape) == 3:
         prediction = np.zeros_like(label)
-        for ind in range(image.shape[0]):
-            slice = image[ind, :, :]
-            x, y = slice.shape[0], slice.shape[1]
-            if x != patch_size[0] or y != patch_size[1]:
-                slice = zoom(slice, (patch_size[0] / x, patch_size[1] / y),
-                             order=3)  # previous using 0
+        for ind in range(image.shape[2]):
+            slice = image[:, :, ind]
             input = torch.from_numpy(slice).unsqueeze(0).unsqueeze(
                 0).float().cuda()
             net.eval()
@@ -87,20 +88,8 @@ def test_single_volume(image,
                 out = torch.argmax(torch.softmax(outputs, dim=1),
                                    dim=1).squeeze(0)
                 out = out.cpu().detach().numpy()
-                if x != patch_size[0] or y != patch_size[1]:
-                    pred = zoom(out, (x / patch_size[0], y / patch_size[1]),
-                                order=0)
-                else:
-                    pred = out
-                prediction[ind] = pred
-    else:
-        input = torch.from_numpy(image).unsqueeze(0).unsqueeze(
-            0).float().cuda()
-        net.eval()
-        with torch.no_grad():
-            out = torch.argmax(torch.softmax(net(input), dim=1),
-                               dim=1).squeeze(0)
-            prediction = out.cpu().detach().numpy()
+                pred = out
+                prediction[:, :, ind] = pred
     metric_list = []
     for i in range(1, classes):
         metric_list.append(
