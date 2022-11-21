@@ -5,7 +5,7 @@ import random
 import sys
 
 import data.Dataset
-import model.SwinU
+import model.Swinv2
 import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     torch.manual_seed(2022)
     torch.cuda.manual_seed(2022)
 
-    net = model.SwinU.SwinUnet(config, num_classes=4).cuda()
+    net = model.Swinv2.Swinv2Unet(config, num_classes=4).cuda()
     pretrained_path = "/home/zhanwei/datafolder/ppp/out_test2/epoch_299.pth"
     pretrained_dict = torch.load(pretrained_path, map_location='cpu')
     print(net.load_state_dict(pretrained_dict["model"]))

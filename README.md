@@ -8,7 +8,7 @@ run Main.py to train the model
 
 run Val.py to validate the model
 
-## Parameters to train:
+## Parameters to run the Main.py:
 
 ### --dataset_path
 
@@ -48,9 +48,6 @@ i'm using 0.01
 
 ### --pretrained_path
 
-should have this but currently not
-
-you need to directly modify the code line `pretrained_path="/home/zhanwei/datafolder/ppp/swinv2_tiny_patch4_window16_256.pth"`
 
 ## Dataset:
 

@@ -4,7 +4,7 @@ import random
 import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
-import model.SwinU
+import model.Swinv2
 import Trainer
 from Config import get_config
 
@@ -25,12 +25,18 @@ parser.add_argument('--epochs',
                     help='maximum epoch number to train')
 parser.add_argument('--batch_size',
                     type=int,
-                    default=3,
+                    default=5,
                     help='batch_size per gpu')
 parser.add_argument('--base_lr',
                     type=float,
                     default=0.01,
                     help='segmentation network learning rate')
+parser.add_argument(
+    '--pretrained_path',
+    type=str,
+    default=
+    "/home/vincent/Documents/swinunetv2/pretrained_swin_model/swinv2_tiny_patch4_window16_256.pth"
+)
 
 args = parser.parse_args()
 
@@ -53,8 +59,8 @@ if __name__ == "__main__":
     if not os.path.exists(args.output_path):
         os.makedirs(args.output_path)
 
-    net = model.SwinU.SwinUnet(config).cuda()
-    pretrained_path = "/home/vincent/Documents/swinunetv2/pretrained_swin_model/swinv2_tiny_patch4_window16_256.pth"
-    net.load_from(pretrained_path)
+    net = model.Swinv2.Swinv2Unet(config).cuda()
+
+    net.load_from(args.pretrained_path)
 
     Trainer.train(config, args, net, args.output_path)
