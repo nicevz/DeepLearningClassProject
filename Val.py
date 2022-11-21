@@ -59,7 +59,6 @@ def inference(args, model):
                                       label,
                                       model,
                                       classes=4,
-                                      patch_size=[256, 256],
                                       test_save_path=args.output_dir,
                                       case=case_name,
                                       z_spacing=1)
